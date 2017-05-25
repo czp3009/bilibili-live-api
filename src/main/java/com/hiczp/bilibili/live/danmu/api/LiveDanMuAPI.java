@@ -106,9 +106,5 @@ public class LiveDanMuAPI implements Closeable {
             heartBeatThread.interrupt();
             heartBeatThread = null;
         }
-        if (callbackDispatchThread != null && callbackDispatchThread.isAlive() && !callbackDispatchThread.isInterrupted()) {
-            callbackDispatchThread.interrupt();
-            callbackDispatchThread = null;
-        }
     }
 }

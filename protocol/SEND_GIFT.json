@@ -1,0 +1,51 @@
+{
+  "cmd": "SEND_GIFT",
+  "data": {
+    "giftName": "B坷垃",
+    "num": 1,
+    "uname": "卡密萨马_(:3」∠)_",
+    "rcost": 31308509,
+    "uid": 7724657,
+    "top_list": [],
+    "timestamp": 1495695108,
+    "giftId": 3,
+    "giftType": 0,
+    "action": "赠送",
+    "super": 1,
+    "price": 9900,
+    "rnd": "1495695068",
+    "newMedal": 1,
+    "newTitle": 0,
+    //medal可能是数字也可能是数组
+    "medal": {
+      "medalId": 10,
+      "medalName": "猛男",
+      "level": 1
+    },
+    "title": "",
+    "beatId": 0,
+    "remain": 0,
+    "eventScore": 0,
+    "eventNum": 0,
+    "notice_msg": [],
+    "capsule": {
+      "normal": {
+        "coin": 1,
+        "change": 1,
+        "progress": {
+          "now": 7200,
+          "max": 10000
+        }
+      },
+      "colorful": {
+        "coin": 0,
+        "change": 0,
+        "progress": {
+          "now": 0,
+          "max": 5000
+        }
+      }
+    },
+    "newMedalName": "猛男"
+  }
+}

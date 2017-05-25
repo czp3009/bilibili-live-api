@@ -12,8 +12,6 @@ class LiveDanMuAPITest {
                     .setPrintDebugInfo(true)
                     .addCallback(new LiveDanMuCallback())
                     .connect();
-            Thread.sleep(10000);
-            liveDanMuAPI.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

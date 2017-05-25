@@ -4,11 +4,14 @@ package com.hiczp.bilibili.live.danmu.api.test;
 import com.hiczp.bilibili.live.danmu.api.ILiveDanMuCallback;
 import com.hiczp.bilibili.live.danmu.api.entity.jsonEntity.*;
 
+import java.util.Date;
+
 /**
  * Created by czp on 17-5-25.
  */
 class LiveDanMuCallback implements ILiveDanMuCallback {
     private void print(String message, Object... objects) {
+        System.out.printf("[%s]", new Date());
         System.out.printf(message + "\n", objects);
     }
 

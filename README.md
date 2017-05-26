@@ -1,7 +1,7 @@
 # Bilibili直播弹幕API
 用于获取B站直播弹幕
 
-#构建需求
+# 构建需求
 openjdk-8-jdk
 
 maven 3.3.9

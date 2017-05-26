@@ -71,5 +71,7 @@ IllegalArgumentException 在构造器中传入错误的房间号或 URL 不正�
 
     String s = danMuMSGEntity.info.getJSONArray(2).getString(1);
 
+SEND_GIFT.data.medal 可能是数字也可能是数组, 具体内容和含义见 json 示例.
+
 # 开源协议
 GPL V3

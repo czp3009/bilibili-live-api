@@ -17,10 +17,10 @@ class PackageRepository {
     static final int PACKAGE_LENGTH_BYTES_LENGTH = 4;    //数据包长度标示占用字符数
     static final int PACKAGE_PROTOCOL_BYTES_LENGTH = 12;
     static final int PACKAGE_HEAD_BYTES_LENGTH = PACKAGE_LENGTH_BYTES_LENGTH + PACKAGE_PROTOCOL_BYTES_LENGTH;
-    static final byte[] JOIN_SUCCESS_PACKAGE_PROTOCOL_BYTES = new byte[]{0x00, 0x10, 0x00, 0x01, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01};
     static final byte[] ONLINE_COUNT_PACKAGE_PROTOCOL_BYTES = new byte[]{0x00, 0x10, 0x00, 0x01, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x01};
     static final byte[] DAN_MU_DATA_PACKAGE_PROTOCOL_BYTES = new byte[]{0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x05, 0x00, 0x00, 0x00, 0x00};
     static final byte[] HEART_BEAT_PACKAGE_BYTES = new byte[]{0x00, 0x00, 0x00, 0x10, 0x00, 0x10, 0x00, 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x01};
+    static final byte[] JOIN_SUCCESS_PACKAGE_BYTES = new byte[]{0x00, 0x00, 0x00, 0x10, 0x00, 0x10, 0x00, 0x01, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01};
     static final byte[] JOIN_PACKAGE_PROTOCOL_BYTES = new byte[]{0x00, 0x10, 0x00, 0x01, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x01};
 
     private static byte[] readBytesFormInputStream(InputStream inputStream, int count) throws IOException {
@@ -43,10 +43,7 @@ class PackageRepository {
     }
 
     static boolean readAndValidateJoinSuccessPackage(InputStream inputStream) throws IOException {
-        return Arrays.equals(Arrays.copyOfRange(
-                readNextPackage(inputStream), PACKAGE_LENGTH_BYTES_LENGTH, PACKAGE_HEAD_BYTES_LENGTH),
-                JOIN_SUCCESS_PACKAGE_PROTOCOL_BYTES
-        );
+        return Arrays.equals(readNextPackage(inputStream), JOIN_SUCCESS_PACKAGE_BYTES);
     }
 
     static byte[] getJoinPackage(int roomId) {

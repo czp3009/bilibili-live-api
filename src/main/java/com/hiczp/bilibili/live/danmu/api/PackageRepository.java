@@ -2,7 +2,6 @@ package com.hiczp.bilibili.live.danmu.api;
 
 import com.alibaba.fastjson.JSON;
 import com.hiczp.bilibili.live.danmu.api.entity.JoinEntity;
-import com.hiczp.bilibili.live.danmu.api.exception.PackageLengthUnexpectedException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,7 +36,7 @@ class PackageRepository {
         byte[] packageLengthBytes = readBytesFormInputStream(inputStream, PACKAGE_LENGTH_BYTES_LENGTH);
         int packageLength = new BigInteger(packageLengthBytes).intValue();
         if (packageLength < PACKAGE_HEAD_BYTES_LENGTH) {
-            throw new PackageLengthUnexpectedException("Package length less than %d byte", PACKAGE_HEAD_BYTES_LENGTH);
+            throw new IOException("Package length less than " + PACKAGE_HEAD_BYTES_LENGTH + " byte");
         }
         return ByteBuffer.allocate(packageLength).put(packageLengthBytes).put(readBytesFormInputStream(inputStream, packageLength - PACKAGE_LENGTH_BYTES_LENGTH)).array();
     }

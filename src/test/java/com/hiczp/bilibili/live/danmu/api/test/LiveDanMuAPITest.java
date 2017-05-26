@@ -8,7 +8,9 @@ import com.hiczp.bilibili.live.danmu.api.LiveDanMuAPI;
 class LiveDanMuAPITest {
     public static void main(String[] args) {
         try {
-            LiveDanMuAPI liveDanMuAPI = new LiveDanMuAPI("http://live.bilibili.com/545342")
+            System.out.println("5 秒后启动");
+            Thread.sleep(5000);
+            new LiveDanMuAPI("http://live.bilibili.com/545342")
                     .setPrintDebugInfo(true)
                     .addCallback(new LiveDanMuCallback())
                     .connect();

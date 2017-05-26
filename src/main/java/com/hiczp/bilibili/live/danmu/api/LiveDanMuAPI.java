@@ -25,7 +25,6 @@ public class LiveDanMuAPI implements Closeable {
     private List<ILiveDanMuCallback> callbacks = new ArrayList<>();
     private Boolean printDebugInfo = false;
     private Thread heartBeatThread;
-    private Thread callbackDispatchThread;
 
     public LiveDanMuAPI(int roomId) {
         this.roomId = roomId;
@@ -85,8 +84,7 @@ public class LiveDanMuAPI implements Closeable {
         heartBeatThread = new Thread(new HeartBeatRunnable(outputStream));
         heartBeatThread.start();
         //启动回调分发线程
-        callbackDispatchThread = new Thread(new CallbackDispatchRunnable(this, inputStream, callbacks, printDebugInfo));
-        callbackDispatchThread.start();
+        new Thread(new CallbackDispatchRunnable(this, inputStream, callbacks, printDebugInfo)).start();
 
         return this;
     }

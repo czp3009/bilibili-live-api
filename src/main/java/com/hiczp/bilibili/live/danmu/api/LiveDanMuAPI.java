@@ -14,6 +14,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * API entrance.
+ * <p>Here is a sample of usage:
+ * <pre>
+ * new LiveDanMuAPI("http://live.bilibili.com/545342")
+ *      .setPrintDebugInfo(true)
+ *      .addCallback(new LiveDanMuCallback())
+ *      .connect();
+ * </pre>
  * Created by czp on 17-5-24.
  */
 public class LiveDanMuAPI implements Closeable {
@@ -26,14 +34,29 @@ public class LiveDanMuAPI implements Closeable {
     private Boolean printDebugInfo = false;
     private Thread heartBeatThread;
 
+    /**
+     * Class constructor, need room id.
+     *
+     * @param roomId the id of room
+     */
     public LiveDanMuAPI(int roomId) {
         this.roomId = roomId;
     }
 
+    /**
+     * Class constructor, need URL of room in String.
+     *
+     * @param url the URL of room in String
+     */
     public LiveDanMuAPI(String url) throws IOException, IllegalArgumentException {
         this(new URL(url));
     }
 
+    /**
+     * Class constructor, need URL of room.
+     *
+     * @param url the URL of room
+     */
     public LiveDanMuAPI(URL url) throws IOException, IllegalArgumentException {
         //在HTML中获取房间号
         String scriptText = Jsoup.parse(url, 10000).head().select("script").last().data();
@@ -45,11 +68,24 @@ public class LiveDanMuAPI implements Closeable {
         }
     }
 
+    /**
+     * Add callback class, it will be called on data incoming or lost connection.
+     *
+     * @param liveDanMuCallback the class which implements from ILiveDanMuCallback
+     * @return self reference
+     */
     public LiveDanMuAPI addCallback(ILiveDanMuCallback liveDanMuCallback) {
         callbacks.add(liveDanMuCallback);
         return this;
     }
 
+    /**
+     * Connect to live server.
+     *
+     * @return self reference
+     * @throws IOException              when socket error
+     * @throws IllegalArgumentException when room id invalid
+     */
     public LiveDanMuAPI connect() throws IOException, IllegalArgumentException {
         //获得服务器地址
         String serverAddress;
@@ -89,11 +125,23 @@ public class LiveDanMuAPI implements Closeable {
         return this;
     }
 
+    /**
+     * Set print debug info, default is false.
+     *
+     * @param printDebugInfo true for print, false for not
+     * @return self reference
+     */
     public LiveDanMuAPI setPrintDebugInfo(Boolean printDebugInfo) {
         this.printDebugInfo = printDebugInfo;
         return this;
     }
 
+    /**
+     * Close the connect and interrupt thread.
+     *
+     * @throws IOException inherit from Closeable
+     * @see Closeable
+     */
     @Override
     public void close() throws IOException {
         if (socket != null) {

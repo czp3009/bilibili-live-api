@@ -1,14 +1,26 @@
-package com.hiczp.bilibili.live.danmu.api.entity.jsonEntity;
+package com.hiczp.bilibili.live.danmu.api.entity;
 
 import com.alibaba.fastjson.JSONArray;
-import com.hiczp.bilibili.live.danmu.api.entity.JSONEntity;
 
 /**
  * Created by czp on 17-5-24.
  */
 public class DanMuMSGEntity extends JSONEntity {
+    /**
+     * A JSONArray with key 'info'.
+     * <p>Many meaning of data in this part is unknown.
+     * <p>Maybe you need to get data manual like:
+     * <pre>
+     *     String s = danMuMSGEntity.info.getJSONArray(2).getString(1);
+     * </pre>
+     */
     public JSONArray info;  //info中有许多内容含义不明
 
+    /**
+     * Get Unix timestamp, it is not Java timestamp!
+     *
+     * @return Unix timestamp
+     */
     //Unix时间戳
     public Long getTimestamp() {
         return info.getJSONArray(0).getLong(4);

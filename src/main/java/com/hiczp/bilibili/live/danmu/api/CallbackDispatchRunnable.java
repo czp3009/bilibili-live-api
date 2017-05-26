@@ -1,8 +1,7 @@
 package com.hiczp.bilibili.live.danmu.api;
 
 import com.alibaba.fastjson.JSON;
-import com.hiczp.bilibili.live.danmu.api.entity.JSONEntity;
-import com.hiczp.bilibili.live.danmu.api.entity.jsonEntity.*;
+import com.hiczp.bilibili.live.danmu.api.entity.*;
 
 import java.io.IOException;
 import java.io.InputStream;

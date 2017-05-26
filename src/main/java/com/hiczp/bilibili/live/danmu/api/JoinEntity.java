@@ -1,11 +1,11 @@
-package com.hiczp.bilibili.live.danmu.api.entity;
+package com.hiczp.bilibili.live.danmu.api;
 
 import java.util.Random;
 
 /**
  * Created by czp on 17-5-24.
  */
-public class JoinEntity {
+class JoinEntity {
     public int roomid;
     public long uid;
 

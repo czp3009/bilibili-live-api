@@ -2,7 +2,7 @@ package com.hiczp.bilibili.live.danmu.api.test;
 
 
 import com.hiczp.bilibili.live.danmu.api.ILiveDanMuCallback;
-import com.hiczp.bilibili.live.danmu.api.entity.jsonEntity.*;
+import com.hiczp.bilibili.live.danmu.api.entity.*;
 
 import java.util.Date;
 

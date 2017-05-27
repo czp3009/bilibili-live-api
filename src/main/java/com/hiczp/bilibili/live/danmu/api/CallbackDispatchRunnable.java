@@ -28,6 +28,10 @@ class CallbackDispatchRunnable implements Runnable {
 
     private void dispatch() throws Exception {
         byte[] packageBytes = PackageRepository.readNextPackage(inputStream);
+        //如果没有回调函数直接开始监听下一个数据包
+        if (callbacks.size() == 0) {
+            return;
+        }
         ByteBuffer byteBuffer = ByteBuffer.wrap(packageBytes);
         byteBuffer.position(PackageRepository.PACKAGE_LENGTH_BYTES_LENGTH);
         byte[] protocolBytes = new byte[PackageRepository.PACKAGE_PROTOCOL_BYTES_LENGTH];

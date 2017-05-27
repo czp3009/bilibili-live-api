@@ -6,7 +6,7 @@
 
     <groupId>com.hiczp</groupId>
     <artifactId>bilibili-live-danmu-api</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>bilibili-live-danmu-api</name>
     <description>B站直播弹幕API</description>
     <url>https://github.com/czp3009/bilibili_live_danmu_api</url>
@@ -35,6 +35,13 @@
         <developerConnection>scm:git@github.com:czp3009/bilibili_live_danmu_api.git</developerConnection>
         <url>git@github.com:czp3009/bilibili_live_danmu_api.git</url>
     </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>oss</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->

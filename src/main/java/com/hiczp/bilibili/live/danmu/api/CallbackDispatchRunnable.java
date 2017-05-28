@@ -115,9 +115,10 @@ class CallbackDispatchRunnable implements Runnable {
 
         try {
             liveDanMuAPI.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            callbacks.forEach(ILiveDanMuCallback::onDisconnect);
         }
-        callbacks.forEach(ILiveDanMuCallback::onDisconnect);
     }
 }

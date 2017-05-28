@@ -5,6 +5,16 @@
 openjdk-8-jdk
 
 maven 3.3.9
+
+# 引入依赖
+Maven
+
+    <!-- https://mvnrepository.com/artifact/com.hiczp/bilibili-live-danmu-api -->
+    <dependency>
+        <groupId>com.hiczp</groupId>
+        <artifactId>bilibili-live-danmu-api</artifactId>
+        <version>1.0.2</version>
+    </dependency>
     
 # 使用示例
 

@@ -146,11 +146,9 @@ public class LiveDanMuAPI implements Closeable {
     public void close() throws IOException {
         if (socket != null) {
             socket.close();
-            socket = null;
         }
-        if (heartBeatThread != null && heartBeatThread.isAlive() && !heartBeatThread.isInterrupted()) {
+        if (heartBeatThread != null) {
             heartBeatThread.interrupt();
-            heartBeatThread = null;
         }
     }
 }

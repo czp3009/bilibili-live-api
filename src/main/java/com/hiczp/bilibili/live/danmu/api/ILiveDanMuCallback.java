@@ -70,4 +70,9 @@ public interface ILiveDanMuCallback {
      */
     //直播结束
     void onPreparingPackage(PreparingEntity preparingEntity);
+
+    /**
+     * On room admins package.
+     */
+    void onRoomAdminsPackage(RoomAdminsEntity roomAdminsEntity);
 }

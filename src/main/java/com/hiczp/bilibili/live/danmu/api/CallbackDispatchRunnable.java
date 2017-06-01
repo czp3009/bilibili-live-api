@@ -77,6 +77,9 @@ class CallbackDispatchRunnable implements Runnable {
                     consumer = iLiveDanMuCallback -> iLiveDanMuCallback.onWelcomeGuardPackage(JSON.parseObject(jsonBytes, WelcomeGuardEntity.class));
                 }
                 break;
+                case "ROOM_ADMINS": {
+                    consumer = iLiveDanMuCallback -> iLiveDanMuCallback.onRoomAdminsPackage(JSON.parseObject(jsonBytes, RoomAdminsEntity.class));
+                }
                 default: {
                     if (printDebugInfo) {
                         System.out.println("Unknown json above");

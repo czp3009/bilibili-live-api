@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * API entrance.
+ * DanMu receiver API.
  * <p>Here is a sample of usage:
  * <pre>
  * new LiveDanMuAPI("http://live.bilibili.com/545342")

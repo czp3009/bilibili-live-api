@@ -64,4 +64,9 @@ class LiveDanMuCallback implements ILiveDanMuCallback {
     public void onPreparingPackage(PreparingEntity preparingEntity) {
         print("直播结束");
     }
+
+    @Override
+    public void onRoomAdminsPackage(RoomAdminsEntity roomAdminsEntity) {
+        print("本房间有 %d 个管理员", roomAdminsEntity.uids.length);
+    }
 }

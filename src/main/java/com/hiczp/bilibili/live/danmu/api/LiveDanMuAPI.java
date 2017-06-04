@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 public class LiveDanMuAPI implements Closeable {
     private static final String CID_INFO_URL = "http://live.bilibili.com/api/player?id=cid:";
     private static final int LIVE_SERVER_PORT = 788;
+    private static final int SOCKET_TIMEOUT = 40 * 1000;
 
     private String urlString;
     private URL url;
@@ -113,6 +114,7 @@ public class LiveDanMuAPI implements Closeable {
         }
 
         socket = new Socket(serverAddress, LIVE_SERVER_PORT);
+        socket.setSoTimeout(SOCKET_TIMEOUT);
         OutputStream outputStream = socket.getOutputStream();
 
         //发送进房数据包

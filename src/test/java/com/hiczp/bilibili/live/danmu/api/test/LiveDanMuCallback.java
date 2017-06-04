@@ -16,6 +16,11 @@ class LiveDanMuCallback implements ILiveDanMuCallback {
     }
 
     @Override
+    public void onConnect() {
+        print("连接成功");
+    }
+
+    @Override
     public void onDisconnect() {
         print("断开连接");
     }

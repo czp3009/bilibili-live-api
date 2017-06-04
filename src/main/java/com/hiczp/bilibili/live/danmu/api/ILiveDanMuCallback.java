@@ -8,6 +8,12 @@ import com.hiczp.bilibili.live.danmu.api.entity.*;
  */
 public interface ILiveDanMuCallback {
     /**
+     * This method will be called on connect succeed.
+     */
+    //连接成功
+    void onConnect();
+
+    /**
      * This method will be called on disconnect include socket error and use of LiveDanMuAPI.close().
      *
      * @see LiveDanMuAPI

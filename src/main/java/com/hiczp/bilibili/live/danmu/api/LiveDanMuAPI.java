@@ -122,6 +122,9 @@ public class LiveDanMuAPI implements Closeable {
         //启动回调分发线程
         new Thread(new CallbackDispatchRunnable(this, inputStream, callbacks, printDebugInfo)).start();
 
+        //回调
+        callbacks.forEach(ILiveDanMuCallback::onConnect);
+
         return this;
     }
 

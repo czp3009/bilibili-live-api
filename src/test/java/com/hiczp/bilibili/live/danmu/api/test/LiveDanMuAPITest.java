@@ -7,12 +7,13 @@ import com.hiczp.bilibili.live.danmu.api.LiveDanMuAPI;
  */
 class LiveDanMuAPITest {
     public static void main(String[] args) {
+        LiveDanMuAPI liveDanMuAPI =
+                new LiveDanMuAPI("http://live.bilibili.com/545342")
+                        .setPrintDebugInfo(true)
+                        .addCallback(new LiveDanMuCallback());
         try {
-            LiveDanMuAPI liveDanMuAPI = new LiveDanMuAPI("http://live.bilibili.com/545342")
-                    .setPrintDebugInfo(true)
-                    .addCallback(new LiveDanMuCallback())
-                    .connect();
-            Thread.sleep(31000);
+            liveDanMuAPI.connect();
+            Thread.sleep(35000);
             liveDanMuAPI.close();
         } catch (Exception e) {
             e.printStackTrace();

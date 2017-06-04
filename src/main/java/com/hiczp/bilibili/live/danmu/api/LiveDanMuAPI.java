@@ -28,6 +28,8 @@ public class LiveDanMuAPI implements Closeable {
     private static final String CID_INFO_URL = "http://live.bilibili.com/api/player?id=cid:";
     private static final int LIVE_SERVER_PORT = 788;
 
+    private String urlString;
+    private URL url;
     private int roomId;
     private Socket socket;
     private List<ILiveDanMuCallback> callbacks = new ArrayList<>();
@@ -48,8 +50,8 @@ public class LiveDanMuAPI implements Closeable {
      *
      * @param url the URL of room in String
      */
-    public LiveDanMuAPI(String url) throws IOException, IllegalArgumentException {
-        this(new URL(url));
+    public LiveDanMuAPI(String url) {
+        this.urlString = url;
     }
 
     /**
@@ -57,15 +59,8 @@ public class LiveDanMuAPI implements Closeable {
      *
      * @param url the URL of room
      */
-    public LiveDanMuAPI(URL url) throws IOException, IllegalArgumentException {
-        //在HTML中获取房间号
-        String scriptText = Jsoup.parse(url, 10000).head().select("script").last().data();
-        Matcher matcher = Pattern.compile("var ROOMID = (\\d+);").matcher(scriptText);
-        if (matcher.find()) {
-            roomId = Integer.valueOf(matcher.group(1));
-        } else {
-            throw new IllegalArgumentException("Invalid URL");
-        }
+    public LiveDanMuAPI(URL url) {
+        this.url = url;
     }
 
     /**
@@ -87,6 +82,21 @@ public class LiveDanMuAPI implements Closeable {
      * @throws IllegalArgumentException when room id invalid
      */
     public LiveDanMuAPI connect() throws IOException, IllegalArgumentException {
+        //得到房间号
+        if (urlString != null) {
+            url = new URL(urlString);
+        }
+        if (url != null) {
+            //在HTML中获取房间号
+            String scriptText = Jsoup.parse(url, 10000).head().select("script").last().data();
+            Matcher matcher = Pattern.compile("var ROOMID = (\\d+);").matcher(scriptText);
+            if (matcher.find()) {
+                roomId = Integer.valueOf(matcher.group(1));
+            } else {
+                throw new IllegalArgumentException("Invalid URL");
+            }
+        }
+
         //获得服务器地址
         String serverAddress;
         try (InputStream inputStream = new URL(CID_INFO_URL + roomId).openStream()) {

@@ -18,20 +18,27 @@ Maven
     
 # 使用示例
 
+    LiveDanMuAPI liveDanMuAPI =
+                    new LiveDanMuAPI("http://live.bilibili.com/545342")
+                            .setPrintDebugInfo(true)
+                            .addCallback(new LiveDanMuCallback());
     try {
-        new LiveDanMuAPI("http://live.bilibili.com/244")
-                .setPrintDebugInfo(true)
-                .addCallback(new LiveDanMuCallback())
-                .connect();
+        liveDanMuAPI.connect();
     } catch (IOException | IllegalArgumentException e) {
+        e.printStackTrace();
+    }
+    //Some code here
+    try {
+        liveDanMuAPI.close();
+    } catch (IOException e) {
         e.printStackTrace();
     }
 
 LiveDanMuAPI 是对外提供的 API 入口, 有三个构造器.
 
     public LiveDanMuAPI(int roomId);
-    public LiveDanMuAPI(String url) throws IOException, IllegalArgumentException;
-    public LiveDanMuAPI(URL url) throws IOException, IllegalArgumentException;
+    public LiveDanMuAPI(String url);
+    public LiveDanMuAPI(URL url);
 
 .setPrintDebugInfo(Boolean printDebugInfo)
 
@@ -48,6 +55,12 @@ LiveDanMuAPI 是对外提供的 API 入口, 有三个构造器.
 IOException 在 Socket 错误时抛出.
 
 IllegalArgumentException 在构造器中传入错误的房间号或 URL 不正确时抛出.
+
+.close()
+
+关闭 socket 连接.
+
+IOException 在 Socket 错误时抛出.
 
 # 特别说明
 并不是所有主播的房间号都是 URL 末尾的数字.

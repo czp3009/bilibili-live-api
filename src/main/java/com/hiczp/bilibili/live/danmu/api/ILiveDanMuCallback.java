@@ -14,9 +14,9 @@ public interface ILiveDanMuCallback {
     void onConnect();
 
     /**
-     * This method will be called on disconnect include socket error and use of LiveDanMuAPI.close().
+     * This method will be called on disconnect include socket error and use of LiveDanMuReceiver.close().
      *
-     * @see LiveDanMuAPI
+     * @see LiveDanMuReceiver
      */
     //连接断开
     void onDisconnect();

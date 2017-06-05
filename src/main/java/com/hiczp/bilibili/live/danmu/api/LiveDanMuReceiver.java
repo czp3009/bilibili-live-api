@@ -17,14 +17,14 @@ import java.util.regex.Pattern;
  * DanMu receiver API.
  * <p>Here is a sample of usage:
  * <pre>
- * new LiveDanMuAPI("http://live.bilibili.com/545342")
+ * new LiveDanMuReceiver("http://live.bilibili.com/545342")
  *      .setPrintDebugInfo(true)
  *      .addCallback(new LiveDanMuCallback())
  *      .connect();
  * </pre>
  * Created by czp on 17-5-24.
  */
-public class LiveDanMuAPI implements Closeable {
+public class LiveDanMuReceiver implements Closeable {
     private static final String CID_INFO_URL = "http://live.bilibili.com/api/player?id=cid:";
     private static final int LIVE_SERVER_PORT = 788;
     private static final int SOCKET_TIMEOUT = 40 * 1000;
@@ -42,7 +42,7 @@ public class LiveDanMuAPI implements Closeable {
      *
      * @param roomId the id of room
      */
-    public LiveDanMuAPI(int roomId) {
+    public LiveDanMuReceiver(int roomId) {
         this.roomId = roomId;
     }
 
@@ -51,7 +51,7 @@ public class LiveDanMuAPI implements Closeable {
      *
      * @param url the URL of room in String
      */
-    public LiveDanMuAPI(String url) {
+    public LiveDanMuReceiver(String url) {
         this.urlString = url;
     }
 
@@ -60,7 +60,7 @@ public class LiveDanMuAPI implements Closeable {
      *
      * @param url the URL of room
      */
-    public LiveDanMuAPI(URL url) {
+    public LiveDanMuReceiver(URL url) {
         this.url = url;
     }
 
@@ -70,7 +70,7 @@ public class LiveDanMuAPI implements Closeable {
      * @param liveDanMuCallback the class which implements from ILiveDanMuCallback
      * @return self reference
      */
-    public LiveDanMuAPI addCallback(ILiveDanMuCallback liveDanMuCallback) {
+    public LiveDanMuReceiver addCallback(ILiveDanMuCallback liveDanMuCallback) {
         callbacks.add(liveDanMuCallback);
         return this;
     }
@@ -82,7 +82,7 @@ public class LiveDanMuAPI implements Closeable {
      * @throws IOException              when socket error
      * @throws IllegalArgumentException when room id invalid
      */
-    public LiveDanMuAPI connect() throws IOException, IllegalArgumentException {
+    public LiveDanMuReceiver connect() throws IOException, IllegalArgumentException {
         //得到房间号
         if (urlString != null) {
             url = new URL(urlString);
@@ -146,7 +146,7 @@ public class LiveDanMuAPI implements Closeable {
      * @param printDebugInfo true for print, false for not
      * @return self reference
      */
-    public LiveDanMuAPI setPrintDebugInfo(Boolean printDebugInfo) {
+    public LiveDanMuReceiver setPrintDebugInfo(Boolean printDebugInfo) {
         this.printDebugInfo = printDebugInfo;
         return this;
     }

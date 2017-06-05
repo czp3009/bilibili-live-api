@@ -17,28 +17,29 @@ Maven
     </dependency>
     
 # 使用示例
+## 接收弹幕
 
-    LiveDanMuAPI liveDanMuAPI =
-                    new LiveDanMuAPI("http://live.bilibili.com/545342")
+    LiveDanMuReceiver liveDanMuReceiver =
+                    new LiveDanMuReceiver("http://live.bilibili.com/545342")
                             .setPrintDebugInfo(true)
                             .addCallback(new LiveDanMuCallback());
     try {
-        liveDanMuAPI.connect();
+        liveDanMuReceiver.connect();
     } catch (IOException | IllegalArgumentException e) {
         e.printStackTrace();
     }
     //Some code here
     try {
-        liveDanMuAPI.close();
+        liveDanMuReceiver.close();
     } catch (IOException e) {
         e.printStackTrace();
     }
 
-LiveDanMuAPI 是对外提供的 API 入口, 有三个构造器.
+LiveDanMuReceiver 是对外提供的 API 入口, 有三个构造器.
 
-    public LiveDanMuAPI(int roomId);
-    public LiveDanMuAPI(String url);
-    public LiveDanMuAPI(URL url);
+    public LiveDanMuReceiver(int roomId);
+    public LiveDanMuReceiver(String url);
+    public LiveDanMuReceiver(URL url);
 
 .setPrintDebugInfo(Boolean printDebugInfo)
 
@@ -100,7 +101,7 @@ IOException 在 Socket 错误时抛出.
 SEND_GIFT.data.medal 可能是数字也可能是数组, 具体内容和含义见 json 示例.
 
 ## 弹幕发送协议
-通过对直播页面的分析发现, 弹幕的发送是一个 RESTFul API.
+通过对直播页面的分析发现, 弹幕的发送是一个 RESTful API.
 
 需要三个 cookie 作为用户登录凭据(站点为 bilibili.com), 分别为 DedeUserID, DedeUserID__ckMd5, SESSDATA.
 

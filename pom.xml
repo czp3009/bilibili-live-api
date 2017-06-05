@@ -6,7 +6,7 @@
 
     <groupId>com.hiczp</groupId>
     <artifactId>bilibili-live-danmu-api</artifactId>
-    <version>1.0.4</version>
+    <version>1.1.0</version>
     <name>bilibili-live-danmu-api</name>
     <description>Bilibili live DanMu API</description>
     <url>https://github.com/czp3009/bilibili_live_danmu_api</url>
@@ -55,6 +55,12 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.32</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.3</version>
         </dependency>
     </dependencies>
 

@@ -14,13 +14,13 @@ import java.util.function.Consumer;
  * Created by czp on 17-5-24.
  */
 class CallbackDispatchRunnable implements Runnable {
-    private LiveDanMuAPI liveDanMuAPI;
+    private LiveDanMuReceiver liveDanMuReceiver;
     private InputStream inputStream;
     private List<ILiveDanMuCallback> callbacks;
     private Boolean printDebugInfo = false;
 
-    CallbackDispatchRunnable(LiveDanMuAPI liveDanMuAPI, InputStream inputStream, List<ILiveDanMuCallback> callbacks, Boolean printDebugInfo) {
-        this.liveDanMuAPI = liveDanMuAPI;
+    CallbackDispatchRunnable(LiveDanMuReceiver liveDanMuReceiver, InputStream inputStream, List<ILiveDanMuCallback> callbacks, Boolean printDebugInfo) {
+        this.liveDanMuReceiver = liveDanMuReceiver;
         this.inputStream = inputStream;
         this.callbacks = callbacks;
         this.printDebugInfo = printDebugInfo;
@@ -117,7 +117,7 @@ class CallbackDispatchRunnable implements Runnable {
         }
 
         try {
-            liveDanMuAPI.close();
+            liveDanMuReceiver.close();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

@@ -86,6 +86,9 @@ IOException 在 Socket 错误时抛出.
 使用 URL 或者 String 表达的 URL 作为构造器参数时, 将自动完成以上房间号的获取.
 
 # 直播弹幕协议
+## 弹幕接收协议
+弹幕的接收是通过 socket 连接至 B 站弹幕推送服务器, 由服务端主动推送实现的.
+
 感谢 lyy 提供的协议分析 http://www.lyyyuna.com/2016/03/14/bilibili-danmu01/
 
 抓取到的一些 json (包含一些注释) 在 ./protocol/
@@ -95,6 +98,32 @@ IOException 在 Socket 错误时抛出.
     String s = danMuMSGEntity.info.getJSONArray(2).getString(1);
 
 SEND_GIFT.data.medal 可能是数字也可能是数组, 具体内容和含义见 json 示例.
+
+## 弹幕发送协议
+通过对直播页面的分析发现, 弹幕的发送是一个 RESTFul API.
+
+需要三个 cookie 作为用户登录凭据(站点为 bilibili.com), 分别为 DedeUserID, DedeUserID__ckMd5, SESSDATA.
+
+URL 为 http://live.bilibili.com/msg/send, 方法为 POST.
+
+参数示例:
+
+    color:16777215
+    fontsize:25
+    mode:1
+    msg:测试
+    rnd:1496669082
+    roomid:1110317
+
+color 与 fontsize 无须解释.
+
+mode 不详, 目前只见过值为 1.
+
+其中 msg 为弹幕文本内容.
+
+rnd 是一个随机数, 其值即为 HTML 页面中的 head 中的 script 部分中的 DANMU_RND 的值.见本文 "[特别说明](#特别说明)" 一节.
+
+roomid 为房间号.
 
 # 开源协议
 GPL V3

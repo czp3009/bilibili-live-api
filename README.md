@@ -118,21 +118,28 @@ URL 为 http://live.bilibili.com/msg/send, 方法为 POST.
 
 color 与 fontsize 无须解释.
 
-mode 不详, 目前只见过值为 1.
+mode 弹幕模式, 对照表(一些模式需要 VIP):
 
-其中 msg 为弹幕文本内容.
+    1 普通
+    4 底端
+    5 顶端
+    6 逆向
+    7 特殊
+    9 高级
+
+msg 为弹幕文本内容.
 
 rnd 是一个随机数, 其值即为 HTML 页面中的 head 中的 script 部分中的 DANMU_RND 的值.见本文 "[特别说明](#特别说明)" 一节.
 
 roomid 为房间号.
 
-返回的 HttpStatus 均为 200.
+请求返回的 HttpStatus 均为 200.
 
-返回一段 json 数据,例如:
+Response body 为 JSON 数据, 例如:
 
     {"code":-400,"msg":"\u53c2\u6570\u9519\u8bef","data":[]}
     
-其中, code 表示改此请求执行结果, 数字与提示信息表(可能不全):
+code 表示该次请求的执行结果, 数字与提示信息对照表(可能不全):
 
     -101: 请先登录(cookies 错误)
 
@@ -151,6 +158,8 @@ msg 为提示信息.
 发送速度过快时, msg 为 "msg in 1s".
 
 data 不详, 未见过除空 JSONArray 以外的情况.
+
+在本 API 中, 请求返回的 JSON 被封装到 DanMuResponseEntity 这一实体类(发送弹幕后返回), 变量名与 JSON key 一致.
 
 # 开源协议
 GPL V3

@@ -3,6 +3,7 @@ package com.hiczp.bilibili.live.danmu.api;
 import com.hiczp.bilibili.live.danmu.api.entity.*;
 
 /**
+ * Abstract class implement from ILiveDanMuCallback.
  * Created by czp on 17-6-6.
  */
 public abstract class LiveDanMuCallbackAdapter implements ILiveDanMuCallback {

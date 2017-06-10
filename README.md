@@ -13,7 +13,7 @@ Maven
     <dependency>
         <groupId>com.hiczp</groupId>
         <artifactId>bilibili-live-danmu-api</artifactId>
-        <version>1.1.0</version>
+        <version>2.0.0</version>
     </dependency>
     
 # 使用示例
@@ -35,7 +35,7 @@ Maven
         e.printStackTrace();
     }
 
-LiveDanMuReceiver 是对外提供的 API 入口, 有三个构造器.
+LiveDanMuReceiver 是对外提供的 API 入口, 有三个构造器:
 
     public LiveDanMuReceiver(int roomId);
     public LiveDanMuReceiver(String url);
@@ -62,6 +62,48 @@ IllegalArgumentException 在构造器中传入错误的房间号或 URL 不正�
 关闭 socket 连接.
 
 IOException 在 Socket 错误时抛出.
+
+LiveDanMuCallback 是继承于 ILiveDanMuCallback 的实体类, 需实现其中的方法.
+
+收到弹幕或连接状态改变时, 所有已注册的回调类中的对应方法会被调用. 连接开始后, 仍可注册回调.
+
+## 发送弹幕
+
+    LiveDanMuSender liveDanMuSender =
+                    new LiveDanMuSender("http://live.bilibili.com/1110317")
+                            .setCookies(YOUR_COOKIES);
+    try {
+        DanMuResponseEntity danMuResponseEntity = liveDanMuSender.send(DANMU_CONTENT);
+        //Do something with danMuResponseEntity
+    } catch (IOException | IllegalArgumentException e) {
+        e.printStackTrace();
+    }
+
+LiveDanMuSender 是 API 入口, 需要直播间 URL 作为构造器参数:
+
+    public LiveDanMuSender(String url);
+    public LiveDanMuSender(URL url);
+
+.setCookies(String cookies) 设置发送请求时使用的 cookies, 必须包含名为 DedeUserID, DedeUserID__ckMd5, SESSDATA 的 cookie. 详见本文 "[弹幕发送协议](#弹幕发送协议)" 一节.
+
+另一种用法是分开设置:
+
+    .setCookies(String DedeUserID, String DedeUserID__ckMd5, String SESSDATA);
+
+.send() 发送一条弹幕, 有两种用法:
+
+    public DanMuResponseEntity send(String message) throws IOException, IllegalArgumentException;
+    public DanMuResponseEntity send(String color, String fontSize, String mode, String message) throws IOException, IllegalArgumentException;
+
+后者可以自行指定各项弹幕参数, 前者将使用默认弹幕参数.
+
+IOException 在网络问题时或 URL 格式错误时抛出.
+
+IllegalArgumentException 在 URL 不正确时抛出.
+
+发送弹幕后, 返回的 JSON 封装到 DanMuResponseEntity, 具体的成员变量和含义见本文 "[弹幕发送协议](#弹幕发送协议)" 一节.
+
+若一秒钟发送了超过一条弹幕, 则弹幕的发送将失败, 若要确保所有弹幕全部发送成功需自行实现弹幕发送队列.
 
 # 特别说明
 并不是所有主播的房间号都是 URL 末尾的数字.
@@ -155,7 +197,7 @@ msg 为提示信息.
 
 发送成功并状态正常时, msg 为空字符串.
 
-发送速度过快时, msg 为 "msg in 1s".
+发送速度过快时(一秒钟只允许发送一条弹幕), msg 为 "msg in 1s".
 
 data 不详, 未见过除空 JSONArray 以外的情况.
 

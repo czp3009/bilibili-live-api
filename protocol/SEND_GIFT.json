@@ -16,7 +16,7 @@
     "rnd": "1495695068",
     "newMedal": 1,
     "newTitle": 0,
-    //medal可能是数字也可能是数组
+    //medal 可能是数字也可能是 JSONObject
     "medal": {
       "medalId": 10,
       "medalName": "猛男",

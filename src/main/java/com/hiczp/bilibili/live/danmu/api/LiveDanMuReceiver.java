@@ -14,14 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * DanMu receiver API.
- * <p>Here is a sample of usage:
- * <pre>
- * new LiveDanMuReceiver("http://live.bilibili.com/545342")
- *      .setPrintDebugInfo(true)
- *      .addCallback(new LiveDanMuCallback())
- *      .connect();
- * </pre>
+ * DanMu receive API.
  * Created by czp on 17-5-24.
  */
 public class LiveDanMuReceiver implements Closeable {

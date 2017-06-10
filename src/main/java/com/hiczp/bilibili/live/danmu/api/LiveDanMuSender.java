@@ -19,7 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * DanMu sender API.
+ * DanMu send API.
  * Created by czp on 17-6-6.
  */
 public class LiveDanMuSender {
@@ -44,6 +44,10 @@ public class LiveDanMuSender {
     public LiveDanMuSender(URL url) {
         this.url = url;
     }
+
+    /*public static String generateCookies(String username, String password) {
+        return null;
+    }*/
 
     private void resolveRoomIdAndRandom() throws IOException, IllegalArgumentException {
         if (url == null) {

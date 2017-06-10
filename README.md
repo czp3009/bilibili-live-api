@@ -140,7 +140,7 @@ IllegalArgumentException 在 URL 不正确时抛出.
 
     String s = danMuMSGEntity.info.getJSONArray(2).getString(1);
 
-SEND_GIFT.data.medal 可能是数字也可能是数组, 具体内容和含义见 json 示例.
+SEND_GIFT.data.medal 可能是数字也可能是 JSONObject, 具体内容和含义见 json 示例.
 
 ## 弹幕发送协议
 通过对直播页面的分析发现, 弹幕的发送是一个 RESTful API.

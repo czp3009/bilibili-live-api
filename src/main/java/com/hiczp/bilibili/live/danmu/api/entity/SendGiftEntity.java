@@ -34,8 +34,8 @@ public class SendGiftEntity extends JSONEntity {
         public Integer newMedal;
         public Integer newTitle;
         /**
-         * The 'medal' can be a Integer or a JSONArray.
-         * <p>When it is a JSONArray, it is a instance of JSONObject. It contains data below:
+         * The 'medal' can be a Integer or a JSONObject.
+         * <p>When it is a JSONObject, It contains data below:
          * <pre>
          *  "medal": {
          *      "medalId": 10,
@@ -51,7 +51,7 @@ public class SendGiftEntity extends JSONEntity {
          *     Integer level = medal.getInteger("level");
          * </pre>
          */
-        //medal可能是数字也可能是数组. 为数组时(JSONObject), 包含三个字段 medalId(Integer), medalName(String), level(Integer)
+        //medal 可能是数字也可能是 JSONObject. 为 JSONObject 时, 包含三个字段 medalId(Integer), medalName(String), level(Integer)
         public Object medal;
         public String title;
         public String beatId;

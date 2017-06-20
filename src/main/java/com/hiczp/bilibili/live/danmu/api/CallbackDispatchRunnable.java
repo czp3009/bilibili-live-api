@@ -1,6 +1,7 @@
 package com.hiczp.bilibili.live.danmu.api;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
 import com.hiczp.bilibili.live.danmu.api.entity.*;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ class CallbackDispatchRunnable implements Runnable {
     private InputStream inputStream;
     private List<ILiveDanMuCallback> callbacks;
     private Boolean printDebugInfo = false;
+    private byte[] jsonBytes;
 
     CallbackDispatchRunnable(LiveDanMuReceiver liveDanMuReceiver, InputStream inputStream, List<ILiveDanMuCallback> callbacks, Boolean printDebugInfo) {
         this.liveDanMuReceiver = liveDanMuReceiver;
@@ -38,7 +40,7 @@ class CallbackDispatchRunnable implements Runnable {
         byteBuffer.get(protocolBytes);
         Consumer<ILiveDanMuCallback> consumer = null;
         if (Arrays.equals(protocolBytes, PackageRepository.DAN_MU_DATA_PACKAGE_PROTOCOL_BYTES)) {    //json数据包
-            byte[] jsonBytes = new byte[byteBuffer.remaining()];
+            jsonBytes = new byte[byteBuffer.remaining()];
             byteBuffer.get(jsonBytes);
             if (printDebugInfo) {
                 System.out.println(new String(jsonBytes));
@@ -111,6 +113,9 @@ class CallbackDispatchRunnable implements Runnable {
                 dispatch();
             } catch (IOException e) {   //socket异常时退出
                 break;
+            } catch (JSONException e) {
+                System.out.println("Wrong JSON: " + new String(jsonBytes));
+                e.printStackTrace();
             } catch (Exception e) { //其他错误时显示错误信息并继续监听下一个数据包
                 e.printStackTrace();
             }

@@ -81,6 +81,21 @@ public class LiveDanMuSender {
         return cipherPassword;
     }*/
 
+    /**
+     * Validate cookies.
+     *
+     * @return is cookies valid
+     * @throws IOException when network error
+     */
+    public static boolean testLogin(String cookies) throws IOException {
+        try (CloseableHttpClient closeableHttpClient = HttpClients.createDefault()) {
+            HttpGet httpGet = new HttpGet("http://api.live.bilibili.com/User/getUserInfo");
+            httpGet.setHeader("Cookie", cookies);
+            String code = JSON.parseObject(EntityUtils.toString(closeableHttpClient.execute(httpGet).getEntity())).getString("code");
+            return code.equals("REPONSE_OK");
+        }
+    }
+
     private void resolveRoomIdAndRandom() throws IOException, IllegalArgumentException {
         if (url == null) {
             url = new URL(urlString);
@@ -134,21 +149,6 @@ public class LiveDanMuSender {
      */
     public boolean isCookiesSet() {
         return cookies != null;
-    }
-
-    /**
-     * Validate cookies.
-     *
-     * @return is cookies valid
-     * @throws IOException when network error
-     */
-    public boolean testLogin() throws IOException {
-        try (CloseableHttpClient closeableHttpClient = HttpClients.createDefault()) {
-            HttpGet httpGet = new HttpGet("http://api.live.bilibili.com/User/getUserInfo");
-            httpGet.setHeader("Cookie", cookies);
-            String code = JSON.parseObject(EntityUtils.toString(closeableHttpClient.execute(httpGet).getEntity())).getString("code");
-            return code.equals("REPONSE_OK");
-        }
     }
 
     /**

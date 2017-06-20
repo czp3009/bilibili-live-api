@@ -8,8 +8,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,7 +26,7 @@ public class LiveDanMuReceiver implements Closeable {
     private URL url;
     private int roomId;
     private Socket socket;
-    private List<ILiveDanMuCallback> callbacks = new ArrayList<>();
+    private List<ILiveDanMuCallback> callbacks = new Vector<>();
     private Boolean printDebugInfo = false;
     private Thread heartBeatThread;
 

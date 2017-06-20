@@ -45,8 +45,40 @@ public class LiveDanMuSender {
         this.url = url;
     }
 
-    /*public static String generateCookies(String username, String password) {
-        return null;
+    /*public static String generateCookies(String username, String password) throws Exception {
+        String hash;
+        String key;
+        //获取 hash 和 key
+        try (CloseableHttpClient closeableHttpClient = HttpClients.createMinimal()) {
+            JSONObject jsonObject = JSON.parseObject(
+                    EntityUtils.toString(
+                            closeableHttpClient.execute(
+                                    new HttpGet("http://passport.bilibili.com/login?act=getkey")
+                            ).getEntity()
+                    )
+            );
+            hash = jsonObject.getString("hash");
+            key = jsonObject.getString("key");
+        }
+
+        //计算密码密文
+        RSAPublicKey rsaPublicKey = new RSAPublicKeyImpl(
+                Base64.getDecoder().decode(
+                        key.replace("-----BEGIN PUBLIC KEY-----", "")
+                                .replace("-----END PUBLIC KEY-----", "")
+                                .replace("\n", "")
+                                .getBytes()
+                )
+        );
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.ENCRYPT_MODE, rsaPublicKey);
+        String cipherPassword = new String(
+                Base64.getEncoder().encode(
+                        cipher.doFinal((hash + password).getBytes())
+                )
+        );
+
+        return cipherPassword;
     }*/
 
     private void resolveRoomIdAndRandom() throws IOException, IllegalArgumentException {
@@ -95,6 +127,13 @@ public class LiveDanMuSender {
     public LiveDanMuSender setCookies(String DedeUserID, String DedeUserID__ckMd5, String SESSDATA) {
         this.cookies = String.format("%s; %s; %s", DedeUserID, DedeUserID__ckMd5, SESSDATA);
         return this;
+    }
+
+    /**
+     * Are cookies set.
+     */
+    public boolean isCookiesSet() {
+        return cookies != null;
     }
 
     /**

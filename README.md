@@ -134,13 +134,13 @@ IllegalArgumentException 在 URL 不正确时抛出.
 
 感谢 lyy 提供的协议分析 http://www.lyyyuna.com/2016/03/14/bilibili-danmu01/
 
-抓取到的一些 json (包含一些注释) 在 ./protocol/
+抓取到的一些 JSON (包含一些注释) 在 ./protocol/
 
 其中的 DANMU_MSG 存储的数据没有键名, 一些不明含义的值需要手动按下标取值, 例如:
 
     String s = danMuMSGEntity.info.getJSONArray(2).getString(1);
 
-SEND_GIFT.data.medal 可能是数字也可能是 JSONObject, 具体内容和含义见 json 示例.
+SEND_GIFT.data.medal 可能是数字也可能是 JSONObject, 具体内容和含义见 JSON 示例.
 
 ## 弹幕发送协议
 通过对直播页面的分析发现, 弹幕的发送是一个 RESTful API.

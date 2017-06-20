@@ -7,6 +7,7 @@
     "rcost": 31308509,
     "uid": 7724657,
     "top_list": [],
+    //top_list 可能是 JSONArray 也可能是布尔类型
     "timestamp": 1495695108,
     "giftId": 3,
     "giftType": 0,

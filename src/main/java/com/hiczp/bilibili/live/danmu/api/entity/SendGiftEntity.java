@@ -15,7 +15,11 @@ public class SendGiftEntity extends JSONEntity {
         public String uname;
         public Integer rcost;
         public Integer uid;
-        public JSONArray top_list;
+        /**
+         * The 'top_list' can be a JSONArray or Boolean.
+         */
+        //top_list 可能是 JSONArray 也可能是 布尔类型, 为 JSONArray 时内部元素不明
+        public Object top_list;
         /**
          * Get Unix timestamp, it is not Java timestamp!
          */
@@ -24,7 +28,7 @@ public class SendGiftEntity extends JSONEntity {
         public Integer giftType;
         public String action;
         /**
-         * The key of this filed in JSON is 'super'. This word conflict with Java keyword, use superI instead.
+         * The key of this field in JSON is 'super'. This word conflict with Java keyword, use superI instead.
          */
         //json中是super, 与java关键字冲突
         @JSONField(name = "super")

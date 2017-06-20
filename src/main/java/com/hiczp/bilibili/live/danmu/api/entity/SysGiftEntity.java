@@ -5,6 +5,6 @@ package com.hiczp.bilibili.live.danmu.api.entity;
  */
 public class SysGiftEntity extends JSONEntity {
     public String msg;
-    public Integer rnd;
+    public Long rnd;
     public Integer uid;
 }

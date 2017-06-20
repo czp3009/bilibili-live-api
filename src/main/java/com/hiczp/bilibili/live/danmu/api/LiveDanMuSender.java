@@ -96,6 +96,16 @@ public class LiveDanMuSender {
         }
     }
 
+    /**
+     * Validate cookies.
+     *
+     * @return is cookies valid
+     * @throws IOException when network error
+     */
+    public boolean testLogin() throws IOException {
+        return testLogin(cookies);
+    }
+
     private void resolveRoomIdAndRandom() throws IOException, IllegalArgumentException {
         if (url == null) {
             url = new URL(urlString);

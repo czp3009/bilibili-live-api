@@ -16,6 +16,18 @@ public class DanMuMSGEntity extends JSONEntity {
      */
     public JSONArray info;  //info中有许多内容含义不明
 
+    public Integer getDanMuPool() {
+        return info.getJSONArray(0).getInteger(0);
+    }
+
+    public Integer getDanMuMode() {
+        return info.getJSONArray(0).getInteger(1);
+    }
+
+    public Integer getDanMuColor() {
+        return info.getJSONArray(0).getInteger(3);
+    }
+
     /**
      * Get Unix timestamp, it is not Java timestamp!
      *

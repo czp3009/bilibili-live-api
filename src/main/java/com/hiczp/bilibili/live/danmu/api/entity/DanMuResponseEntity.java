@@ -7,6 +7,11 @@ import com.alibaba.fastjson.JSONArray;
  * Created by czp on 17-6-6.
  */
 public class DanMuResponseEntity {
+    public int NO_LOGIN = -101;
+    public int WRONG_PARAM = -400;
+    public int OUT_OF_LENGTH = -500;
+    public int SUCCESS = 0;
+
     /**
      * Result code of sending DanMu.
      */

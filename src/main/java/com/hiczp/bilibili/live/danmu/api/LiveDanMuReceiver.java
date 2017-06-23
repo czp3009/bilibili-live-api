@@ -57,6 +57,10 @@ public class LiveDanMuReceiver implements Closeable {
         this.url = url;
     }
 
+    Socket getSocket() {
+        return socket;
+    }
+
     /**
      * Add callback class, it will be called on data incoming or lost connection.
      *

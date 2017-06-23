@@ -111,8 +111,10 @@ class CallbackDispatchRunnable implements Runnable {
         while (true) {
             try {
                 dispatch();
-            } catch (IOException e) {   //socket异常时退出
-                break;
+            } catch (IOException e) {   //socket关闭时退出
+                if (liveDanMuReceiver.getSocket().isClosed()) {
+                    break;
+                }
             } catch (JSONException e) {
                 System.out.println("Wrong JSON: " + new String(jsonBytes));
                 e.printStackTrace();

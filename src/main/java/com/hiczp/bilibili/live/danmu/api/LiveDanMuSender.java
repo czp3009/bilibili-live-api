@@ -10,14 +10,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.jsoup.Jsoup;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * DanMu send API.
@@ -26,8 +23,9 @@ import java.util.regex.Pattern;
 public class LiveDanMuSender {
     private String urlString;
     private URL url;
-    private String roomId;
-    private String random;
+    private Integer roomId;
+    private Long random;
+    private Integer roomURL;
     private String cookies;
 
     /**
@@ -130,27 +128,15 @@ public class LiveDanMuSender {
         return getUserInfo(cookies);
     }
 
-    private void resolveRoomIdAndRandom() throws IOException, IllegalArgumentException {
+    private void resolveRoomData() throws IOException, IllegalArgumentException {
         if (url == null) {
             url = new URL(urlString);
         }
-        if (roomId == null || random == null) {
-            String scriptText = Jsoup.parse(url, 10000).head().select("script").last().data();
-            Matcher matcher;
-            //得到 ROOMID
-            matcher = Pattern.compile("var ROOMID = (\\d+);").matcher(scriptText);
-            if (matcher.find()) {
-                roomId = matcher.group(1);
-            } else {
-                throw new IllegalArgumentException("Invalid URL");
-            }
-            //得到 DANMU_RND
-            matcher = Pattern.compile("var DANMU_RND = (\\d+);").matcher(scriptText);
-            if (matcher.find()) {
-                random = matcher.group(1);
-            } else {
-                throw new IllegalArgumentException("Invalid URL");
-            }
+        if (roomId == null || random == null || roomURL == null) {
+            ScriptEntity scriptEntity = Utils.resolveScriptPartInHTML(url);
+            roomId = scriptEntity.roomId;
+            random = scriptEntity.random;
+            roomURL = scriptEntity.roomURL;
         }
     }
 
@@ -204,7 +190,7 @@ public class LiveDanMuSender {
      * @return server response entity
      */
     public DanMuResponseEntity send(String color, String fontSize, String mode, String message) throws IOException, IllegalArgumentException {
-        resolveRoomIdAndRandom();
+        resolveRoomData();
         CloseableHttpClient closeableHttpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost("http://live.bilibili.com/msg/send");
         httpPost.setHeader("Cookie", cookies);
@@ -215,8 +201,8 @@ public class LiveDanMuSender {
                                 new BasicNameValuePair("fontsize", fontSize),
                                 new BasicNameValuePair("mode", mode),
                                 new BasicNameValuePair("msg", message),
-                                new BasicNameValuePair("random", random),
-                                new BasicNameValuePair("roomid", roomId)
+                                new BasicNameValuePair("random", random.toString()),
+                                new BasicNameValuePair("roomid", roomId.toString())
                         ),
                         StandardCharsets.UTF_8
                 )
@@ -224,5 +210,21 @@ public class LiveDanMuSender {
         DanMuResponseEntity danMuResponseEntity = JSON.parseObject(EntityUtils.toString(closeableHttpClient.execute(httpPost).getEntity()), DanMuResponseEntity.class);
         closeableHttpClient.close();
         return danMuResponseEntity;
+    }
+
+    public URL getUrl() {
+        return url;
+    }
+
+    public Integer getRoomId() {
+        return roomId;
+    }
+
+    public Long getRandom() {
+        return random;
+    }
+
+    public Integer getRoomURL() {
+        return roomURL;
     }
 }

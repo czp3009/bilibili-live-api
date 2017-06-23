@@ -1,6 +1,12 @@
 package com.hiczp.bilibili.live.danmu.api;
 
+import org.jsoup.Jsoup;
+
+import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by czp on 17-5-25.
@@ -53,5 +59,33 @@ class Utils {
             }
             System.out.println();
         }
+    }
+
+    static ScriptEntity resolveScriptPartInHTML(URL url) throws IOException, IllegalArgumentException {
+        ScriptEntity scriptEntity = new ScriptEntity();
+        String scriptText = Jsoup.parse(url, 10000).head().select("script").last().data();
+        Matcher matcher;
+        //得到 ROOMID
+        matcher = Pattern.compile("var ROOMID = (\\d+);").matcher(scriptText);
+        if (matcher.find()) {
+            scriptEntity.roomId = Integer.valueOf(matcher.group(1));
+        } else {
+            throw new IllegalArgumentException("Invalid URL");
+        }
+        //得到 DANMU_RND
+        matcher = Pattern.compile("var DANMU_RND = (\\d+);").matcher(scriptText);
+        if (matcher.find()) {
+            scriptEntity.random = Long.valueOf(matcher.group(1));
+        } else {
+            throw new IllegalArgumentException("Invalid URL");
+        }
+        //得到 ROOMURL
+        matcher = Pattern.compile("var ROOMURL = (\\d+);").matcher(scriptText);
+        if (matcher.find()) {
+            scriptEntity.roomURL = Integer.valueOf(matcher.group(1));
+        } else {
+            throw new IllegalArgumentException("Invalid URL");
+        }
+        return scriptEntity;
     }
 }

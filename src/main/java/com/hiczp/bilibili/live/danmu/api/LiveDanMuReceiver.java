@@ -9,9 +9,8 @@ import java.net.SocketException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * DanMu receive API.
@@ -22,9 +21,11 @@ public class LiveDanMuReceiver implements Closeable {
     private static final int LIVE_SERVER_PORT = 788;
     private static final int SOCKET_TIMEOUT = 40 * 1000;
 
+    private int roomId;
+    private Long random;
+    private Integer roomURL;
     private String urlString;
     private URL url;
-    private int roomId;
     private Socket socket;
     private List<ILiveDanMuCallback> callbacks = new Vector<>();
     private Boolean printDebugInfo = false;
@@ -85,14 +86,10 @@ public class LiveDanMuReceiver implements Closeable {
             url = new URL(urlString);
         }
         if (url != null) {
-            //在HTML中获取房间号
-            String scriptText = Jsoup.parse(url, 10000).head().select("script").last().data();
-            Matcher matcher = Pattern.compile("var ROOMID = (\\d+);").matcher(scriptText);
-            if (matcher.find()) {
-                roomId = Integer.valueOf(matcher.group(1));
-            } else {
-                throw new IllegalArgumentException("Invalid URL");
-            }
+            ScriptEntity scriptEntity = Utils.resolveScriptPartInHTML(url);
+            roomId = scriptEntity.roomId;
+            random = scriptEntity.random;
+            roomURL = scriptEntity.roomURL;
         }
 
         //获得服务器地址
@@ -162,5 +159,21 @@ public class LiveDanMuReceiver implements Closeable {
         if (heartBeatThread != null) {
             heartBeatThread.interrupt();
         }
+    }
+
+    public Optional<URL> getUrl() {
+        return url == null ? Optional.empty() : Optional.of(url);
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public Optional<Long> getRandom() {
+        return random == null ? Optional.empty() : Optional.of(random);
+    }
+
+    public Optional<Integer> getRoomURL() {
+        return roomURL == null ? Optional.empty() : Optional.of(roomURL);
     }
 }

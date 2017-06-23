@@ -199,6 +199,8 @@ msg 为提示信息.
 
 发送速度过快时(一秒钟只允许发送一条弹幕), msg 为 "msg in 1s".
 
+在短时间内重复同一句话, msg 为 "msg repeat".
+
 data 不详, 未见过除空 JSONArray 以外的情况.
 
 在本 API 中, 请求返回的 JSON 被封装到 DanMuResponseEntity 这一实体类(发送弹幕后返回), 变量名与 JSON key 一致.

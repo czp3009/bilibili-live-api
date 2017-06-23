@@ -1,0 +1,21 @@
+{
+  "code": "REPONSE_OK",
+  "msg": "ok",
+  "data": {
+    "uname": "czp3009",
+    "face": "http:\/\/i1.hdslb.com\/bfs\/face\/4f65e79399ad5a1bf3f877851b2f819d5870b494.jpg",
+    "silver": 1560,
+    "gold": 0,
+    "achieve": 0,
+    "vip": 0,
+    "svip": 0,
+    "user_level": 11,
+    "user_next_level": 12,
+    "user_intimacy": 798000,
+    "user_next_intimacy": 800000,
+    "user_level_rank": ">50000",
+    "billCoin": 469
+  }
+  //data 可能是空 JSONArray 也可能是 JSONObject
+}
+//此 JSON 为访问 http://api.live.bilibili.com/User/getUserInfo 获得的结果

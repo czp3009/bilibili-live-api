@@ -2,6 +2,7 @@ package com.hiczp.bilibili.live.danmu.api;
 
 import com.alibaba.fastjson.JSON;
 import com.hiczp.bilibili.live.danmu.api.entity.DanMuResponseEntity;
+import com.hiczp.bilibili.live.danmu.api.entity.UserInfoEntity;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -84,15 +85,27 @@ public class LiveDanMuSender {
     /**
      * Validate cookies.
      *
+     * @param cookies cookies of user
      * @return is cookies valid
      * @throws IOException when network error
      */
     public static boolean testLogin(String cookies) throws IOException {
+        return getUserInfo(cookies).code.equals("REPONSE_OK");
+    }
+
+    /**
+     * Get user info.
+     *
+     * @param cookies cookies of user
+     * @return UserInfoEntity
+     * @throws IOException when network error
+     * @see UserInfoEntity
+     */
+    public static UserInfoEntity getUserInfo(String cookies) throws IOException {
         try (CloseableHttpClient closeableHttpClient = HttpClients.createDefault()) {
             HttpGet httpGet = new HttpGet("http://api.live.bilibili.com/User/getUserInfo");
             httpGet.setHeader("Cookie", cookies);
-            String code = JSON.parseObject(EntityUtils.toString(closeableHttpClient.execute(httpGet).getEntity())).getString("code");
-            return code.equals("REPONSE_OK");
+            return JSON.parseObject(EntityUtils.toString(closeableHttpClient.execute(httpGet).getEntity()), UserInfoEntity.class);
         }
     }
 
@@ -104,6 +117,17 @@ public class LiveDanMuSender {
      */
     public boolean testLogin() throws IOException {
         return testLogin(cookies);
+    }
+
+    /**
+     * Get user info.
+     *
+     * @return UserInfoEntity
+     * @throws IOException when network error
+     * @see UserInfoEntity
+     */
+    public UserInfoEntity getUserInfo() throws IOException {
+        return getUserInfo(cookies);
     }
 
     private void resolveRoomIdAndRandom() throws IOException, IllegalArgumentException {

@@ -157,7 +157,11 @@ public class LiveDanMuReceiver implements Closeable {
             socket.close();
         }
         if (heartBeatThread != null) {
-            heartBeatThread.interrupt();
+            try {
+                heartBeatThread.interrupt();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

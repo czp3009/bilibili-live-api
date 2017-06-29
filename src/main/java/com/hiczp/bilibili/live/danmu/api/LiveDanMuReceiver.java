@@ -165,19 +165,38 @@ public class LiveDanMuReceiver implements Closeable {
         }
     }
 
+    /**
+     * Get URL of room.
+     */
     public Optional<URL> getUrl() {
         return url == null ? Optional.empty() : Optional.of(url);
     }
 
+    /**
+     * Get ROOMID
+     */
     public int getRoomId() {
         return roomId;
     }
 
+    /**
+     * Get DANMU_RND.
+     */
     public Optional<Long> getRandom() {
         return random == null ? Optional.empty() : Optional.of(random);
     }
 
+    /**
+     * Get ROOMURL.
+     */
     public Optional<Integer> getRoomURL() {
         return roomURL == null ? Optional.empty() : Optional.of(roomURL);
+    }
+
+    /**
+     * Get is socket connected.
+     */
+    public boolean isConnected() {
+        return socket != null && socket.isConnected();
     }
 }

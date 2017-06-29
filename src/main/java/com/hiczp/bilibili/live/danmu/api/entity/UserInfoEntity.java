@@ -4,8 +4,8 @@ package com.hiczp.bilibili.live.danmu.api.entity;
  * Created by czp on 17-6-23.
  */
 public class UserInfoEntity {
-    public static String SUCCESS = "REPONSE_OK";
-    public static String NO_LOGIN = "-101";
+    public static final String SUCCESS = "REPONSE_OK";
+    public static final String NO_LOGIN = "-101";
 
     //code 可能是数字也可能是字符串
     public String code;

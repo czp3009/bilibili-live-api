@@ -1,6 +1,7 @@
 package com.hiczp.bilibili.live.danmu.api;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.hiczp.bilibili.live.danmu.api.entity.DanMuResponseEntity;
 import com.hiczp.bilibili.live.danmu.api.entity.UserInfoEntity;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -10,11 +11,15 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import sun.security.rsa.RSAPublicKeyImpl;
 
+import javax.crypto.Cipher;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
+import java.util.Base64;
 
 /**
  * DanMu send API.
@@ -44,7 +49,13 @@ public class LiveDanMuSender {
         this.url = url;
     }
 
-    /*public static String generateCookies(String username, String password) throws Exception {
+    /**
+     * Cipher password of Bilibili account, use for username and password login which feature is not finished yet.
+     *
+     * @param password password of Bilibili account
+     * @return ciphered password
+     */
+    public static String cipherPassword(String password) throws Exception {
         String hash;
         String key;
         //获取 hash 和 key
@@ -71,14 +82,12 @@ public class LiveDanMuSender {
         );
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, rsaPublicKey);
-        String cipherPassword = new String(
+        return new String(
                 Base64.getEncoder().encode(
                         cipher.doFinal((hash + password).getBytes())
                 )
         );
-
-        return cipherPassword;
-    }*/
+    }
 
     /**
      * Validate cookies.
@@ -212,18 +221,30 @@ public class LiveDanMuSender {
         return danMuResponseEntity;
     }
 
+    /**
+     * Get URL of room.
+     */
     public URL getUrl() {
         return url;
     }
 
+    /**
+     * Get ROOMID
+     */
     public Integer getRoomId() {
         return roomId;
     }
 
+    /**
+     * Get DANMU_RND.
+     */
     public Long getRandom() {
         return random;
     }
 
+    /**
+     * Get ROOMURL.
+     */
     public Integer getRoomURL() {
         return roomURL;
     }

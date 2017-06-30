@@ -30,6 +30,7 @@ public class LiveDanMuReceiver implements Closeable {
     private List<ILiveDanMuCallback> callbacks = new Vector<>();
     private Boolean printDebugInfo = false;
     private Thread heartBeatThread;
+    private Thread callbackDispatchThread;
 
     /**
      * Class constructor, need room id.
@@ -126,7 +127,8 @@ public class LiveDanMuReceiver implements Closeable {
         heartBeatThread = new Thread(new HeartBeatRunnable(outputStream));
         heartBeatThread.start();
         //启动回调分发线程
-        new Thread(new CallbackDispatchRunnable(this, inputStream, callbacks, printDebugInfo)).start();
+        callbackDispatchThread = new Thread(new CallbackDispatchRunnable(this, inputStream, callbacks, printDebugInfo));
+        callbackDispatchThread.start();
 
         //回调
         callbacks.forEach(ILiveDanMuCallback::onConnect);
@@ -162,6 +164,17 @@ public class LiveDanMuReceiver implements Closeable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    /**
+     * Wait until CallbackDispatchThread exit.
+     */
+    public void waitUntilCallbackDispatchThreadExit() {
+        try {
+            callbackDispatchThread.join();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

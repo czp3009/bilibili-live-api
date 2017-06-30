@@ -64,7 +64,7 @@ public class LiveDanMuReceiver implements Closeable {
     }
 
     /**
-     * Add callback class, it will be called on data incoming or lost connection.
+     * Add callback, it will be invoked on data incoming or lost connection.
      *
      * @param liveDanMuCallback the class which implements from ILiveDanMuCallback
      * @return self reference
@@ -72,6 +72,16 @@ public class LiveDanMuReceiver implements Closeable {
     public LiveDanMuReceiver addCallback(ILiveDanMuCallback liveDanMuCallback) {
         callbacks.add(liveDanMuCallback);
         return this;
+    }
+
+    /**
+     * Remove callback.
+     *
+     * @param liveDanMuCallback the class which implements from ILiveDanMuCallback
+     * @return is remove operation success
+     */
+    public boolean removeCallback(ILiveDanMuCallback liveDanMuCallback) {
+        return callbacks.remove(liveDanMuCallback);
     }
 
     /**
@@ -130,8 +140,10 @@ public class LiveDanMuReceiver implements Closeable {
         callbackDispatchThread = new Thread(new CallbackDispatchRunnable(this, inputStream, callbacks, printDebugInfo));
         callbackDispatchThread.start();
 
-        //回调
-        callbacks.forEach(ILiveDanMuCallback::onConnect);
+        //由于回调本身可能继续添加回调, 因此需要按下标循环处理直到不再产生新回调. 直接 forEach 会导致 ConcurrentModificationException
+        for (int i = 0; i < callbacks.size(); i++) {
+            callbacks.get(i).onConnect();
+        }
 
         return this;
     }

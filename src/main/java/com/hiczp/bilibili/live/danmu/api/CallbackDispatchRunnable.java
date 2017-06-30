@@ -105,9 +105,10 @@ class CallbackDispatchRunnable implements Runnable {
             }
         }
         if (consumer != null) {
-            for (ILiveDanMuCallback iLiveDanMuCallback : callbacks) {
+            //fori 是为了避免 ConcurrentModificationException
+            for (int i = 0; i < callbacks.size(); i++) {
                 try {   //避免异常导致之后的所有回调被跳过
-                    consumer.accept(iLiveDanMuCallback);
+                    consumer.accept(callbacks.get(i));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -137,13 +138,14 @@ class CallbackDispatchRunnable implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            callbacks.forEach(iLiveDanMuCallback -> {
+            //fori 是为了避免 ConcurrentModificationException
+            for (int i = 0; i < callbacks.size(); i++) {
                 try {
-                    iLiveDanMuCallback.onDisconnect();
+                    callbacks.get(i).onDisconnect();
                 } catch (Exception e) { //出错时执行下一个
                     e.printStackTrace();
                 }
-            });
+            }
         }
     }
 }

@@ -171,10 +171,12 @@ public class LiveDanMuReceiver implements Closeable {
      * Wait until CallbackDispatchThread exit.
      */
     public void waitUntilCallbackDispatchThreadExit() {
-        try {
-            callbackDispatchThread.join();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (callbackDispatchThread != null) {
+            try {
+                callbackDispatchThread.join();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

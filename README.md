@@ -13,7 +13,7 @@ Maven
     <dependency>
         <groupId>com.hiczp</groupId>
         <artifactId>bilibili-live-danmu-api</artifactId>
-        <version>2.1.2</version>
+        <version>2.1.3</version>
     </dependency>
     
 # 使用示例

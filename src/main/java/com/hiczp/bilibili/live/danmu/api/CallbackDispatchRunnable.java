@@ -3,6 +3,8 @@ package com.hiczp.bilibili.live.danmu.api;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.hiczp.bilibili.live.danmu.api.entity.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +17,8 @@ import java.util.function.Consumer;
  * Created by czp on 17-5-24.
  */
 class CallbackDispatchRunnable implements Runnable {
+    private static final Logger log = LoggerFactory.getLogger(CallbackDispatchRunnable.class);
+
     private LiveDanMuReceiver liveDanMuReceiver;
     private InputStream inputStream;
     private List<ILiveDanMuCallback> callbacks;
@@ -43,7 +47,7 @@ class CallbackDispatchRunnable implements Runnable {
             jsonBytes = new byte[byteBuffer.remaining()];
             byteBuffer.get(jsonBytes);
             if (printDebugInfo) {
-                System.out.println(new String(jsonBytes));
+                log.debug(new String(jsonBytes));
             }
             String cmd = ((JSONEntity) JSON.parseObject(jsonBytes, JSONEntity.class)).cmd;
             switch (cmd) {
@@ -84,21 +88,20 @@ class CallbackDispatchRunnable implements Runnable {
                 }
                 default: {
                     if (printDebugInfo) {
-                        System.out.println("Unknown json above");
+                        log.error("Unknown json above");
                     }
                 }
             }
         } else if (Arrays.equals(protocolBytes, PackageRepository.ONLINE_COUNT_PACKAGE_PROTOCOL_BYTES)) {    //在线人数数据包
             int onlineCount = byteBuffer.getInt();
             if (printDebugInfo) {
-                System.out.println("Viewers: " + onlineCount);
+                log.debug("Viewers: " + onlineCount);
             }
             consumer = iLiveDanMuCallback -> iLiveDanMuCallback.onOnlineCountPackage(onlineCount);
         } else {    //未知数据包
             if (printDebugInfo) {
-                System.out.println("Unknown package below");
+                log.error("Unknown package below");
                 Utils.printBytes(packageBytes);
-                System.out.println();
             }
         }
         if (consumer != null) {
@@ -122,7 +125,7 @@ class CallbackDispatchRunnable implements Runnable {
                     break;
                 }
             } catch (JSONException e) {
-                System.out.println("Wrong JSON: " + new String(jsonBytes));
+                log.error("Wrong JSON: " + new String(jsonBytes));
                 e.printStackTrace();
             } catch (Exception e) { //其他错误时显示错误信息并继续监听下一个数据包
                 e.printStackTrace();

@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.hiczp</groupId>
-    <artifactId>bilibili-live-danmu-api</artifactId>
-    <version>2.2.0</version>
-    <name>bilibili-live-danmu-api</name>
-    <description>Bilibili live DanMu API</description>
-    <url>https://github.com/czp3009/bilibili_live_danmu_api</url>
+    <artifactId>bilibili-live-api</artifactId>
+    <version>3.0.0</version>
+    <name>bilibili-live-api</name>
+    <description>Bilibili live API</description>
+    <url>https://github.com/czp3009/bilibili-live-api</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -26,14 +26,14 @@
         <developer>
             <name>czp</name>
             <email>czp3009@gmail.com</email>
-            <url>https://www.hiczp.com/</url>
+            <url>https://www.hiczp.com</url>
         </developer>
     </developers>
 
     <scm>
-        <connection>scm:git@github.com:czp3009/bilibili_live_danmu_api.git</connection>
-        <developerConnection>scm:git@github.com:czp3009/bilibili_live_danmu_api.git</developerConnection>
-        <url>git@github.com:czp3009/bilibili_live_danmu_api.git</url>
+        <connection>scm:git@github.com:czp3009/bilibili-live-api.git</connection>
+        <developerConnection>scm:git@github.com:czp3009/bilibili-live-api.git</developerConnection>
+        <url>git@github.com:czp3009/bilibili-live-api.git</url>
     </scm>
 
     <distributionManagement>
@@ -44,30 +44,7 @@
     </distributionManagement>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.10.2</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.32</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.3</version>
-        </dependency>
+
     </dependencies>
 
     <build>

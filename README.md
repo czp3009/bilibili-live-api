@@ -1,3 +1,14 @@
+# Deprecated
+本仓库已废弃.
+
+本项目使用 Bilibili Web 协议, 随着 Bilibili 前端的更新, 已经无法正常使用.
+
+本项目仅提供 Bilibili 直播间的弹幕获取有关 API, 功能已被合并到新的项目 [Bilibili API](https://github.com/czp3009/bilibili-api) 中.
+
+新的项目使用 Bilibili Android 协议, 短时间内不会由于 Bilibili 的更新而不可用.
+
+新项目提供 Bilibili 所有 API 的调用(编写中, 现阶段 API 可能不全).
+
 # Bilibili直播弹幕API
 用于获取B站直播弹幕
 
